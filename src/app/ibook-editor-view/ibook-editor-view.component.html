@@ -1,0 +1,59 @@
+<mat-drawer-container class="example-container" [hasBackdrop]="false">
+  <mat-drawer-content>
+    <div class="content-container">
+      <div class="header">
+        <span class="title">{{
+          (editMode ? "book edit view" : "book preview") | titlecase
+        }}</span>
+      </div>
+      <quill-editor
+        *ngIf="editMode"
+        [(ngModel)]="content"
+        class="content-editor"
+        [placeholder]="''"
+        [modules]="quillConfiguration"
+        (onSelectionChanged)="onSelectionChanged($event)"
+      >
+        [formats]="'html'" >
+      </quill-editor>
+      <div
+        *ngIf="!editMode"
+        [innerHTML]="content"
+        class="preview"
+        #preview
+      ></div>
+    </div>
+  </mat-drawer-content>
+  <mat-drawer #drawer [mode]="'side'" [position]="'end'">
+    <div *ngIf="selectedTextData" class="drawer-container">
+      <span class="selected-word">{{ selectedTextData.word }}</span>
+      <ng-container
+        *ngFor="let phonetic of selectedTextData.phonetics; last as isLast"
+      >
+        <span class="row" *ngIf="phonetic.text">
+          {{ phonetic.text }} <ng-container *ngIf="!isLast"> - </ng-container>
+        </span>
+      </ng-container>
+      <div class="meanings" *ngFor="let obj of selectedTextData.meanings">
+        <div class="row">
+          <span class="key">part of speech: </span>
+          <span>{{ obj.partOfSpeech }}</span>
+        </div>
+        <div class="row" *ngIf="obj.synonyms.length">
+          <span class="key">synonyms: </span>
+          <span *ngFor="let synonym of obj.synonyms; last as isLast"
+            >{{ synonym }}<ng-container *ngIf="!isLast">, </ng-container></span
+          >
+        </div>
+        <div class="row" *ngFor="let def of obj.definitions.slice(0, 1)">
+          <div *ngIf="def.definition">
+            <span class="key">defination: </span> {{ def.definition }}
+          </div>
+          <div *ngIf="def.example">
+            <span class="key">example: </span> {{ def.example }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-drawer>
+</mat-drawer-container>

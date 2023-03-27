@@ -1,0 +1,36 @@
+:host {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: calc(100vh - 64px);
+}
+
+.share-view-card {
+  width: 400px;
+}
+
+mat-card-header {
+  display: flex;
+  justify-content: center;
+}
+
+.mat-card-actions {
+  padding: 0 8px;
+}
+
+.content-container {
+  padding: 16px 0 0;
+  display: flex;
+  justify-content: center;
+}
+
+.book-share-form {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+}
+
+::ng-deep .mat-form-field {
+  width: 92%;
+}

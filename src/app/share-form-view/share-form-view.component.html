@@ -1,0 +1,84 @@
+<mat-card class="share-view-card">
+  <form [formGroup]="form" (ngSubmit)="onSubmit(formRef)" #formRef="ngForm">
+    <mat-card-header>
+      <mat-card-title>Shared With Team</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="content-container">
+        <div class="book-share-form">
+          <mat-form-field appearance="fill">
+            <mat-label>Name</mat-label>
+            <input matInput placeholder="John Doe" formControlName="name" />
+            <mat-error *ngIf="name?.errors?.['required']"
+              >Name is required.</mat-error
+            >
+            <mat-error *ngIf="name?.errors?.['minlength']"
+              >Name should be at least 3 character.</mat-error
+            >
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Email</mat-label>
+            <input
+              matInput
+              placeholder="taimoor@ibook.com"
+              formControlName="email"
+            />
+            <mat-error *ngIf="email?.errors?.['required']"
+              >Email is required.</mat-error
+            >
+            <mat-error *ngIf="email?.errors?.['email']"
+              >Email is invalid.</mat-error
+            >
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-select formControlName="role">
+              <mat-option value="view">Viewer</mat-option>
+              <mat-option value="comment">Commentator</mat-option>
+              <mat-option value="Edit">Editor</mat-option>
+            </mat-select>
+            <mat-label>Role</mat-label>
+            <mat-error *ngIf="role?.errors?.['required']"
+              >Role is required.</mat-error
+            >
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-select formControlName="city">
+              <mat-option value="city" *ngFor="let city of listOfCities">{{
+                city
+              }}</mat-option>
+            </mat-select>
+            <mat-label>City</mat-label>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Address</mat-label>
+            <textarea
+              matInput
+              placeholder="Present Address"
+              formControlName="address"
+            ></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-card-content>
+    <mat-card-actions align="end">
+      <button mat-button color="warn" type="button" (click)="reset()">
+        Reset
+      </button>
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="loading"
+      >
+        Share
+      </button>
+    </mat-card-actions>
+    <mat-card-footer>
+      <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+    </mat-card-footer>
+  </form>
+</mat-card>
